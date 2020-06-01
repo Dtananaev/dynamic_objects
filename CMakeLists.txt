@@ -7,13 +7,13 @@ MESSAGE("FALGS: ${CMAKE_CXX_FLAGS}")
 ## Find catkin and any catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp roslib)
 find_package(PNG)
-
+find_package(Boost 1.45.0 COMPONENTS filesystem) 
 catkin_package()
 
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-add_executable(dynamic_objects src/dynamic_objects_app.cpp)
-target_link_libraries(dynamic_objects ${catkin_LIBRARIES} ${PNG_LIBRARIES})
+add_executable(dynamic_objects src/dynamic_objects_app.cpp src/data_loader.cpp)
+target_link_libraries(dynamic_objects ${catkin_LIBRARIES} ${PNG_LIBRARIES}  ${Boost_LIBRARIES})
 
 

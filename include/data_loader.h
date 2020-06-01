@@ -3,7 +3,12 @@
 #define DATA_LOADER_H_
 
 #include <string>
-#include <png++/png.hpp>
+#include <png.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <boost/filesystem.hpp>
 
 namespace dynamic_objects
 {
@@ -13,7 +18,8 @@ namespace dynamic_objects
     public:
         DataLoader();
         ~DataLoader();
-        bool load_image(std::string filename);
+        static void get_sorted_files_with_ext(const ::boost::filesystem::path &dir, const std::string &ext, std::vector<std::string> &ret);
+        static bool load_image(const std::string &filename, std::vector<float> &image);
 
     private:
     };
