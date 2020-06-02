@@ -13,6 +13,7 @@
 #include <geometry_msgs/Point32.h>
 #include <sensor_msgs/ChannelFloat32.h>
 #include <fstream>
+#include <jsoncpp/json/json.h>
 #include "data_types.h"
 namespace dynamic_objects
 {
