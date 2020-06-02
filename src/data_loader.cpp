@@ -89,12 +89,12 @@ namespace dynamic_objects
     }
     bool DataLoader::load_bboxes(const std::string &filename, std::vector<dynamic_objects::bbox> &boxes)
     {
-        // std::ifstream input(filename);
-        // Json::Reader reader;
-        // Json::Value obj;
-        // reader.parse(input, obj);
+        std::ifstream input(filename);
+        Json::Reader reader;
+        Json::Value obj;
+        reader.parse(input, obj);
 
-        // input.close();
+        input.close();
     }
 
 } // namespace dynamic_objects

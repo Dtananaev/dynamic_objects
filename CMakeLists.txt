@@ -10,8 +10,12 @@ find_package(PNG)
 find_package(Boost 1.45.0 COMPONENTS filesystem) 
 find_package(jsoncpp REQUIRED)
 catkin_package()
+
 set(jsoncpp_INCLUDE_DIRS /usr/include/jsoncpp)
-set(jsoncpp_LIBRARIES /usr/lib/)
+
+add_library(jsoncpp_LIBRARIES SHARED IMPORTED)
+ set_property(TARGET jsoncpp_LIBRARIES PROPERTY IMPORTED_LOCATION "
+ /usr/lib/x86_64-linux-gnu/libjsoncpp.so")
 
 message("FOUND CONFIG: ${jsoncpp_CONFIG}")
 message("INCLUDE DIRS: ${jsoncpp_INCLUDE_DIRS}")
@@ -21,6 +25,7 @@ message("LIBRARIES: ${jsoncpp_LIBRARIES}")
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS}  ${jsoncpp_INCLUDE_DIRS})
 
 add_executable(dynamic_objects src/dynamic_objects_app.cpp src/data_loader.cpp src/data_streamer.cpp)
+
 target_link_libraries(dynamic_objects ${catkin_LIBRARIES} ${PNG_LIBRARIES}  ${Boost_LIBRARIES} ${jsoncpp_LIBRARIES})
 
 
