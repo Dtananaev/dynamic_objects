@@ -25,7 +25,7 @@ int main(int argc, char **argv)
   int height = 0;
   std::vector<uint8_t> image;
   std::vector<geometry_msgs::Point32> lidar;
-  std::vector<sensor_msgs::ChannelFloat32> intensities;
+  std::vector<float> intensities;
 
   dynamic_objects::DataStreamer streamer;
   ros::Rate loop_rate(10);
@@ -34,15 +34,14 @@ int main(int argc, char **argv)
     if (ros::ok())
     {
       // load image
-      //std::string image_path = image_dir + "/" + image_list[i];
-      //dynamic_objects::DataLoader::load_image(image_path, image, height, width);
+      std::string image_path = image_dir + "/" + image_list[i];
+      dynamic_objects::DataLoader::load_image(image_path, image, height, width);
       // load lidar
       std::string lidar_path = lidar_dir + "/" + lidar_list[i];
-      std::cout << "lidar_path " << lidar_path << '\n';
       dynamic_objects::DataLoader::load_lidar(lidar_path, lidar, intensities);
 
       // Publish
-      //streamer.publish_image(image, height, width);
+      streamer.publish_image(image, height, width);
       streamer.publish_lidar(lidar, intensities);
       ros::spinOnce();
       loop_rate.sleep();

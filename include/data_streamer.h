@@ -18,7 +18,7 @@ namespace dynamic_objects
         ~DataStreamer();
 
         void publish_image(const std::vector<uint8_t> &image, int height, int width);
-        void publish_lidar(const std::vector<geometry_msgs::Point32> &lidar, const std::vector<sensor_msgs::ChannelFloat32> &intensities);
+        void publish_lidar(const std::vector<geometry_msgs::Point32> &lidar, const std::vector<float> &intensities);
 
     private:
         ros::NodeHandle m_nh;

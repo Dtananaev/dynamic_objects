@@ -22,13 +22,15 @@ namespace dynamic_objects
         msg.data = image;
         m_image_pub.publish(msg);
     }
-    void DataStreamer::publish_lidar(const std::vector<geometry_msgs::Point32> &lidar, const std::vector<sensor_msgs::ChannelFloat32> &intensities)
+    void DataStreamer::publish_lidar(const std::vector<geometry_msgs::Point32> &lidar, const std::vector<float> &intensities)
     {
         sensor_msgs::PointCloud msg;
         msg.header.stamp = ros::Time::now();
         msg.header.frame_id = "/map";
         msg.points = lidar;
-        //msg.channels = intensities;
+        msg.channels.resize(1);
+        msg.channels[0].name = "intensity";
+        msg.channels[0].values = intensities;
         m_lidar_pub.publish(msg);
     }
 

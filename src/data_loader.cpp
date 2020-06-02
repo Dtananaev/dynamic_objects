@@ -78,48 +78,22 @@ namespace dynamic_objects
         intensities.clear();
         std::ifstream input(filename, std::ios::binary);
 
-        float nx;
-
-        input.read((char *)&nx, sizeof(nx));
-
-        vector<float> x;
-        x.resize(new_nx);
-
-        for (int i = 0; i < nx; i++)
-        {
-            inputFile.read((char *)&x[i], sizeof(x[i]));
-        }
-
         //input = static_cast<float>(input);
         input.seekg(0, std::ios::end);
-        size_t size = input.tellg();
+        size_t size = input.tellg(); // size in bytes
         input.seekg(0, std::ios::beg);
-        char *memblock = new char[size];
-        memcpy(&f, &b, size * sizeof(f));
-        input.read(memblock, size);
-        input.close();
 
-        float x, y, z, i;
-        for (int i = 0; i < size; i += 4)
+        for (size_t i = 0; input.good() && !input.eof(); ++i)
         {
-            geometry_msgs::Point32 p;
-
-            p.x = static_cast<float>(memblock[i]);
-            p.y = static_cast<float>(memblock[i + 1]);
-            c = input.get();
-            p.z = static_cast<float>(c);
-            c = input.get();
-            float i = static_cast<float>(c);
-            lidar.push_back(p);
-            intensities.push_back(i);
+            geometry_msgs::Point32 point;
+            float intensity;
+            input.read((char *)&point.x, 3 * sizeof(float));
+            input.read((char *)&intensity, sizeof(float));
+            lidar.push_back(point);
+            sensor_msgs::ChannelFloat32 channel;
+            intensities.push_back(intensity);
         }
-        //float a = static_cast<float>(c);
-        //std::cout << "x" << x << " y " << y << " z " << z << " i " << i << "\n ";
-        //c = input.get();
+        input.close();
     }
-    // for (int i = 0; i < size; i + 4)
-    // {
-    // }
-}; // namespace dynamic_objects
 
 } // namespace dynamic_objects
