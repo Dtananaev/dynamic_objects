@@ -2,11 +2,6 @@
 #include "data_loader.h"
 namespace dynamic_objects
 {
-    template <class T>
-    void read(std::ifstream &input, std::vector<T> &v)
-    {
-        input.read((char *)&v[0], sizeof(T) * v.size());
-    }
 
     DataLoader::DataLoader()
     {
@@ -77,8 +72,6 @@ namespace dynamic_objects
         lidar.clear();
         intensities.clear();
         std::ifstream input(filename, std::ios::binary);
-
-        //input = static_cast<float>(input);
         input.seekg(0, std::ios::end);
         size_t size = input.tellg(); // size in bytes
         input.seekg(0, std::ios::beg);
@@ -90,10 +83,12 @@ namespace dynamic_objects
             input.read((char *)&point.x, 3 * sizeof(float));
             input.read((char *)&intensity, sizeof(float));
             lidar.push_back(point);
-            sensor_msgs::ChannelFloat32 channel;
             intensities.push_back(intensity);
         }
         input.close();
+    }
+    bool DataLoader::load_bboxes(const std::string &filename, std::vector<dynamic_objects::bbox> &boxes)
+    {
     }
 
 } // namespace dynamic_objects
