@@ -11,9 +11,8 @@
 #include <boost/filesystem.hpp>
 #include <cstdint>
 #include <geometry_msgs/Point32.h>
-#include <sensor_msgs/ChannelFloat32.h>
 #include <fstream>
-#include <json/json.h>
+#include <sstream>
 #include "data_types.h"
 namespace dynamic_objects
 {
@@ -26,7 +25,7 @@ namespace dynamic_objects
         static void get_sorted_files_with_ext(const std::string &dir, const std::string &ext, std::vector<std::string> &ret);
         static bool load_image(const std::string &filename, std::vector<uint8_t> &image, int &height, int &width);
         static bool load_lidar(const std::string &filename, std::vector<geometry_msgs::Point32> &lidar, std::vector<float> &intensities);
-        static bool load_bboxes(const std::string &filename, std::vector<dynamic_objects::bbox> &boxes);
+        static bool load_bboxes(const std::string &filename, std::vector<dynamic_objects::CwhlyBox> &boxes);
 
     private:
     };
